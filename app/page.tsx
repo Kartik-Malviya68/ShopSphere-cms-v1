@@ -11,16 +11,19 @@ import {
 import { Textarea } from "@/components/ui/textarea";
 import axios from "axios";
 import Image from "next/image";
-import React from "react";
+import React, { use, useEffect } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
-
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 function page() {
   const {
     register,
     handleSubmit,
     watch,
     setValue,
-    formState: { errors },
+    formState,
+    reset,
+    formState: { errors, isSubmitSuccessful },
   } = useForm<ProductForm.Product>({});
   const onSubmitProductData: SubmitHandler<ProductForm.Product> = (data) => {
     axios
@@ -31,7 +34,10 @@ function page() {
       .then((res) => {
         console.log(res);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        console.log(err);
+        toast(`Product not added ${err}`, { type: "error" });
+      });
   };
 
   const color = watch("color", []);
@@ -69,9 +75,16 @@ function page() {
     newImage.splice(index, 1);
     setValue("image", newImage);
   };
-  console.log(image);
+
+  useEffect(() => {
+    if (formState.isSubmitSuccessful) {
+      toast("Product added", { type: "success" });
+      reset();
+    }
+  }, [isSubmitSuccessful]);
   return (
     <div className="w-full flex justify-center py-40 items-center ">
+      <ToastContainer />
       <div className="absolute top-3 left-3 grid grid-cols-2 grid-rows-3 gap-4">
         {image.map((image, index) => (
           <Image
@@ -203,7 +216,7 @@ function page() {
             Enter Color
           </label>
           <div className="w-full gap-2 flex items-center">
-            <Input type="text" id="colorInput" placeholder="Product price" />
+            <Input type="text" id="colorInput" placeholder="Product Gender" />
             <Button size="lg" onClick={addColor} type="button">
               Add Color
             </Button>
