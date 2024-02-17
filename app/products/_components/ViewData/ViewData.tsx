@@ -10,8 +10,8 @@ import React from "react";
 function ViewData({ product }: { product: ProductForm.Product }) {
   return React.Children.only (
     <Dialog>
-      <DialogTrigger asChild>
-        <Button variant="outline">View Data</Button>``
+      <DialogTrigger>
+        <Button variant="outline">View Data</Button>
       </DialogTrigger>
       <DialogContent className="h-[800px] max-w-[800px]">
         <ScrollArea className=" flex w-full flex-col gap-1 rounded-md">

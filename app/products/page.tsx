@@ -74,7 +74,7 @@ function page() {
 
   const router = useRouter();
   console.log(pId);
-  return  (
+  return (
     <div className="container w-full">
       <ToastContainer />
 
@@ -134,7 +134,7 @@ function page() {
                 />
               </TableCell>
               <TableCell>
-                {/* <ViewData product={product} /> */}
+                <ViewData product={product} />
               </TableCell>
             </TableRow>
           ))}
