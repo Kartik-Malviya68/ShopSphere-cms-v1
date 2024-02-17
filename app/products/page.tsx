@@ -1,21 +1,37 @@
 "use client";
-
+import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
 import {
   Table,
   TableBody,
-  TableCaption,
   TableCell,
   TableHead,
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import useStamina from "@/modules/StateManagement/Stamina/useStamina";
 import axios from "axios";
-import Image from "next/image";
+import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
+import EditDataSlider from "./_components/EditDataSlider/EditDataSlider";
+import ViewData from "./_components/ViewData/ViewData";
 
 function page() {
+  const [showRowData, action] = useStamina({
+    initialState: {
+      showRowData: false,
+    },
+    actions: {
+      toggleShowRowData(v) {
+        v.showRowData = !v.showRowData;
+      },
+    },
+  });
   const [products, setProducts] = useState<ProductForm.Product[]>([]);
-
+  const [pId, setPId] = useState<string[]>([]);
   useEffect(() => {
     axios
       .get(
@@ -28,17 +44,57 @@ function page() {
         console.log(err);
       });
   }, [setProducts]);
-
-  console.log(products);
-
+  const deleteProduct = async () => {
+    try {
+      await Promise.all(
+        pId.map((productID) =>
+          axios.delete(
+            `https://shopesphere-backend-v1.vercel.app/api/v1/products/del/${productID}`
+          )
+        )
+      );
+      toast("Product deleted", { type: "success" });
+      window.location.reload();
+    } catch (error) {
+      toast("Product not deleted", { type: "error" });
+    }
+  };
+  const toggleProductSelection = (productID: string) => {
+    setPId((perv) => {
+      if (perv.includes(productID)) {
+        return perv.filter((p) => p !== productID);
+      } else {
+        return [...perv, productID];
+      }
+    });
+  };
   const triptText = (text: any) => {
     return text.length > 40 ? text.substring(0, 40) + "..." : text;
   };
 
-  return (
-    <div className="overflow-x-scroll">
-      <Table className="overflow-x-scroll">
-        <TableCaption>A list of your recent invoices.</TableCaption>
+  const router = useRouter();
+  console.log(pId);
+  return  (
+    <div className="container w-full">
+      <ToastContainer />
+
+      <div className="w-full flex p-5  justify-between ">
+        <Button variant={"link"} onClick={() => router.push("/")}>
+          Go To Add Data
+        </Button>
+        <div className="self-end flex gap-3">
+          <Button
+            variant="destructive"
+            onClick={deleteProduct}
+            disabled={pId.length === 0}
+          >
+            Delete
+          </Button>
+
+          <EditDataSlider productId={pId[0]} />
+        </div>
+      </div>
+      <Table>
         <TableHeader>
           <TableRow>
             <TableHead className="w-[100px]">ID</TableHead>
@@ -51,13 +107,14 @@ function page() {
             <TableHead>Color</TableHead>
             <TableHead>Rating</TableHead>
             <TableHead>Rating Count</TableHead>
-            <TableHead>Description</TableHead>
-            <TableHead>Image</TableHead>
+
+            <TableHead className="w-[20px]">Select</TableHead>
+            <TableHead>View Data</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
           {products?.map((product, index) => (
-            <TableRow key={index}>
+            <TableRow key={index} onClick={action.toggleShowRowData}>
               <TableCell>{index}</TableCell>
               <TableCell>{product.name}</TableCell>
               <TableCell>{product.brand}</TableCell>
@@ -68,19 +125,16 @@ function page() {
               <TableCell>{product.color}</TableCell>
               <TableCell>{product.rating?.rating}</TableCell>
               <TableCell>{product.rating?.ratingCount}</TableCell>
-              <TableCell>{triptText(product.description)}</TableCell>
               <TableCell>
-                <div className="w-full flex gap-1 flex-wrap">
-                  {product.image.map((img, index) => (
-                    <Image
-                      src={img}
-                      key={index}
-                      width={50}
-                      height={50}
-                      alt="img"
-                    />
-                  ))}
-                </div>
+                <Checkbox
+                  name="product"
+                  value={product._id}
+                  onCheckedChange={() => toggleProductSelection(product._id)}
+                  onChange={() => toggleProductSelection(product._id)}
+                />
+              </TableCell>
+              <TableCell>
+                {/* <ViewData product={product} /> */}
               </TableCell>
             </TableRow>
           ))}
