@@ -88,6 +88,7 @@ function page() {
       <div className="absolute top-3 left-3 grid grid-cols-2 grid-rows-3 gap-4">
         {image.map((image, index) => (
           <Image
+
             key={image}
             src={image}
             className="cursor-pointer"
