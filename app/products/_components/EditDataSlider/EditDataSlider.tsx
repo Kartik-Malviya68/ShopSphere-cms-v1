@@ -129,6 +129,7 @@ function EditDataSlider({ productId }: { productId: string }) {
                   </label>
                   <Input
                     type="text"
+                    defaultValue={products?.name}
                     {...register("name", {
                       required: "This is required",
                     })}
@@ -143,6 +144,7 @@ function EditDataSlider({ productId }: { productId: string }) {
                     Enter brand
                   </label>
                   <Input
+                    defaultValue={products?.brand}
                     type="text"
                     {...register("brand", {
                       required: "This is required",
@@ -158,6 +160,7 @@ function EditDataSlider({ productId }: { productId: string }) {
                     Enter price
                   </label>
                   <Input
+                    defaultValue={products?.price}
                     type="text"
                     {...register("price", {
                       required: "This is required",
@@ -175,6 +178,7 @@ function EditDataSlider({ productId }: { productId: string }) {
                     Enter Category
                   </label>
                   <Input
+                    defaultValue={products?.category}
                     type="text"
                     {...register("category", {
                       required: "This is required",
@@ -192,6 +196,7 @@ function EditDataSlider({ productId }: { productId: string }) {
                     Enter Gender
                   </label>
                   <Select
+                    defaultValue={products?.genderType}
                     {...register("genderType", {
                       required: "This is required",
                     })}
@@ -217,6 +222,7 @@ function EditDataSlider({ productId }: { productId: string }) {
                     Enter Style
                   </label>
                   <Input
+                    defaultValue={products?.style}
                     type="text"
                     {...register("style", { required: "This is required" })}
                     placeholder="Product style"
@@ -243,6 +249,7 @@ function EditDataSlider({ productId }: { productId: string }) {
                 </label>
                 <div className="w-full gap-2 flex items-center">
                   <Input
+                    defaultValue={products?.color}
                     type="text"
                     id="colorInput"
                     placeholder="Product Gender"
@@ -261,6 +268,7 @@ function EditDataSlider({ productId }: { productId: string }) {
                 </label>
                 <div className="w-full gap-2 flex items-center">
                   <Input
+                    defaultValue={products?.image}
                     type="text"
                     id="imageInput"
                     placeholder="Product Image"
