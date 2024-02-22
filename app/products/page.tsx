@@ -68,9 +68,6 @@ function page() {
       }
     });
   };
-  const triptText = (text: any) => {
-    return text.length > 40 ? text.substring(0, 40) + "..." : text;
-  };
 
   const router = useRouter();
   console.log(pId);
@@ -91,7 +88,7 @@ function page() {
             Delete
           </Button>
 
-          <EditDataSlider productId={pId[0]} />
+          
         </div>
       </div>
       <Table>
@@ -104,12 +101,13 @@ function page() {
             <TableHead>Category</TableHead>
             <TableHead>Gender</TableHead>
             <TableHead>Style</TableHead>
-            <TableHead>Color</TableHead>
-            <TableHead>Rating</TableHead>
-            <TableHead>Rating Count</TableHead>
+            {/* <TableHead>Color</TableHead> */}
+            {/* <TableHead>Rating</TableHead>
+            <TableHead>Rating Count</TableHead> */}
 
             <TableHead className="w-[20px]">Select</TableHead>
             <TableHead>View Data</TableHead>
+            <TableHead>Edit</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -122,9 +120,9 @@ function page() {
               <TableCell>{product.category}</TableCell>
               <TableCell>{product.genderType}</TableCell>
               <TableCell>{product.style}</TableCell>
-              <TableCell>{product.color}</TableCell>
-              <TableCell>{product.rating?.rating}</TableCell>
-              <TableCell>{product.rating?.ratingCount}</TableCell>
+              {/* <TableCell>{product.color}</TableCell> */}
+              {/* <TableCell>{product.rating?.rating}</TableCell>
+              <TableCell>{product.rating?.ratingCount}</TableCell> */}
               <TableCell>
                 <Checkbox
                   name="product"
@@ -135,6 +133,9 @@ function page() {
               </TableCell>
               <TableCell>
                 <ViewData product={product} />
+              </TableCell>
+              <TableCell>
+              <EditDataSlider productId={product._id} />
               </TableCell>
             </TableRow>
           ))}
