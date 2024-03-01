@@ -67,6 +67,7 @@ function EditDataSlider({ productId }: { productId: string }) {
       .then(() => {})
       .catch((err) => {
         console.log(err);
+        window.location.reload();
         toast(`Product Update Failed ${err}`, { type: "error" });
       });
   };
