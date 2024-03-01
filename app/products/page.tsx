@@ -87,8 +87,6 @@ function page() {
           >
             Delete
           </Button>
-
-          
         </div>
       </div>
       <Table>
@@ -110,36 +108,40 @@ function page() {
             <TableHead>Edit</TableHead>
           </TableRow>
         </TableHeader>
-        <TableBody>
-          {products?.map((product, index) => (
-            <TableRow key={index} onClick={action.toggleShowRowData}>
-              <TableCell>{index}</TableCell>
-              <TableCell>{product.name}</TableCell>
-              <TableCell>{product.brand}</TableCell>
-              <TableCell>{product.price}</TableCell>
-              <TableCell>{product.category}</TableCell>
-              <TableCell>{product.genderType}</TableCell>
-              <TableCell>{product.style}</TableCell>
-              {/* <TableCell>{product.color}</TableCell> */}
-              {/* <TableCell>{product.rating?.rating}</TableCell>
+        
+          <TableBody>
+            
+            {products?.map((product, index) => (
+              
+              <TableRow key={index} onClick={action.toggleShowRowData}>
+                <TableCell>{index}</TableCell>
+                <TableCell>{product.name}</TableCell>
+                <TableCell>{product.brand}</TableCell>
+                <TableCell>{product.price}</TableCell>
+                <TableCell>{product.category}</TableCell>
+                <TableCell>{product.genderType}</TableCell>
+                <TableCell>{product.style}</TableCell>
+                {/* <TableCell>{product.color}</TableCell> */}
+                {/* <TableCell>{product.rating?.rating}</TableCell>
               <TableCell>{product.rating?.ratingCount}</TableCell> */}
-              <TableCell>
-                <Checkbox
-                  name="product"
-                  value={product._id}
-                  onCheckedChange={() => toggleProductSelection(product._id)}
-                  onChange={() => toggleProductSelection(product._id)}
-                />
-              </TableCell>
-              <TableCell>
-                <ViewData product={product} />
-              </TableCell>
-              <TableCell>
-              <EditDataSlider productId={product._id} />
-              </TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
+                <TableCell>
+                  <Checkbox
+                    name="product"
+                    value={product._id}
+                    onCheckedChange={() => toggleProductSelection(product._id)}
+                    onChange={() => toggleProductSelection(product._id)}
+                  />
+                </TableCell>
+                <TableCell>
+                  <ViewData product={product} />
+                </TableCell>
+                <TableCell>
+                  <EditDataSlider productId={product._id} />
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        
       </Table>
     </div>
   );
