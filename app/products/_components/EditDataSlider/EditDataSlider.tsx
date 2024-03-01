@@ -59,7 +59,8 @@ function EditDataSlider({ productId }: { productId: string }) {
   ) => {
     axios
       .put(
-        `https://shopesphere-backend-v1.vercel.app/api/v1/products//update/${productId}`,
+        `https://shopesphere-backend-v1.vercel.app/api/v1/products/update/${productId}`,
+        
         data
       )
 
