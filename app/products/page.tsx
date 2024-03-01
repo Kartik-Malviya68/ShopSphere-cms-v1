@@ -99,49 +99,60 @@ function page() {
             <TableHead>Category</TableHead>
             <TableHead>Gender</TableHead>
             <TableHead>Style</TableHead>
-            {/* <TableHead>Color</TableHead> */}
-            {/* <TableHead>Rating</TableHead>
-            <TableHead>Rating Count</TableHead> */}
-
             <TableHead className="w-[20px]">Select</TableHead>
             <TableHead>View Data</TableHead>
             <TableHead>Edit</TableHead>
           </TableRow>
         </TableHeader>
-        
-          <TableBody>
-            
-            {products?.map((product, index) => (
-              
-              <TableRow key={index} onClick={action.toggleShowRowData}>
-                <TableCell>{index}</TableCell>
-                <TableCell>{product.name}</TableCell>
-                <TableCell>{product.brand}</TableCell>
-                <TableCell>{product.price}</TableCell>
-                <TableCell>{product.category}</TableCell>
-                <TableCell>{product.genderType}</TableCell>
-                <TableCell>{product.style}</TableCell>
-                {/* <TableCell>{product.color}</TableCell> */}
-                {/* <TableCell>{product.rating?.rating}</TableCell>
-              <TableCell>{product.rating?.ratingCount}</TableCell> */}
-                <TableCell>
-                  <Checkbox
-                    name="product"
-                    value={product._id}
-                    onCheckedChange={() => toggleProductSelection(product._id)}
-                    onChange={() => toggleProductSelection(product._id)}
-                  />
-                </TableCell>
-                <TableCell>
-                  <ViewData product={product} />
-                </TableCell>
-                <TableCell>
-                  <EditDataSlider productId={product._id} />
-                </TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        
+
+        <TableBody className="w-full">
+          {products.length === 0
+            ? Array.from({ length: 20 }).map((_, index) => (
+                <TableRow key={index}  className="bg-gray-600 animate-pulse h-10 w-full">
+                  <TableCell/>
+                  <TableCell/>
+                  <TableCell/>
+                  <TableCell/>
+                  <TableCell/>
+                  <TableCell/>
+                  <TableCell/>
+                  <TableCell/>
+                  <TableCell/>
+                  <TableCell/>
+
+                </TableRow>
+              ))
+            : products?.map((product, index) => (
+                <TableRow key={index} onClick={action.toggleShowRowData}>
+                  <TableCell>{(index+1).toLocaleString()}</TableCell>
+                  <TableCell>{product.name}</TableCell>
+                  <TableCell>{product.brand}</TableCell>
+                  <TableCell>{product.price}</TableCell>
+                  <TableCell>{product.category}</TableCell>
+                  <TableCell>{product.genderType}</TableCell>
+                  <TableCell>{product.style}</TableCell>
+                  {/* <TableCell>{product.color}</TableCell> */}
+                  {/* <TableCell>{product.rating?.rating}</TableCell>
+                <TableCell>{product.rating?.ratingCount}</TableCell> */}
+                  <TableCell>
+                    <Checkbox
+                      name="product"
+                      value={product._id}
+                      onCheckedChange={() =>
+                        toggleProductSelection(product._id)
+                      }
+                      onChange={() => toggleProductSelection(product._id)}
+                    />
+                  </TableCell>
+                  <TableCell>
+                    <ViewData product={product} />
+                  </TableCell>
+                  <TableCell>
+                    <EditDataSlider productId={product._id} />
+                  </TableCell>
+                </TableRow>
+              ))}
+        </TableBody>
       </Table>
     </div>
   );
